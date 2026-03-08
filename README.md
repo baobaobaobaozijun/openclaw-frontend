@@ -1,140 +1,110 @@
-# OpenClaw Frontend - 前端应用
+# 豆沙 (Dousha) - 工作空间配置
 
-🍡 **由豆沙Agent 负责的前端业务代码仓库**
-
----
-
-## 🏠 关于本项目
-
-这是 OpenClaw 项目的**前端业务代码仓库**，包含所有用户界面代码。
-
-**注意：** 如果你要找的是豆沙Agent 的配置文档，请访问：https://github.com/baobaobaobaozijun/openclawPlayground/tree/main/workspace-programmer/dousha
+🍡 **前端工程师 / UI/UX设计师**
 
 ---
 
-## 📁 项目结构
+## 📋 你的职责
+
+- UI/UX设计
+- 前端页面开发
+- 响应式适配
+- 性能优化
+
+---
+
+## 📁 目录说明
 
 ```
-openclaw-frontend/
-├── README.md              # 本文件
-├── package.json           # Node.js 依赖
-├── .gitignore            # Git 忽略配置
-│
-├── src/                  # 源代码目录（待创建）
-│   ├── components/       # Vue/React组件
-│   │   ├── common/
-│   │   ├── layout/
-│   │   └── business/
-│   │
-│   ├── pages/            # 页面
-│   │   ├── Home.vue
-│   │   ├── Article.vue
-│   │   └── Login.vue
-│   │
-│   ├── styles/           # 样式文件
-│   │   ├── variables.scss
-│   │   ├── global.scss
-│   │   └── components.scss
-│   │
-│   ├── router/           # 路由配置
-│   │   └── index.js
-│   │
-│   ├── store/            # 状态管理
-│   │   └── index.js
-│   │
-│   └── utils/            # 工具函数
-│       ├── request.js
-│       └── helpers.js
-│
-├── public/               # 静态资源
-│   └── favicon.ico
-│
-└── docs/                 # 设计文档（待创建）
-    ├── design-system.md
-    └── guidelines.md
+workspace-dousha/
+├── README.md              # 本文件 - 你的工作台
+├── tasks/                 # 任务管理
+│   ├── backlog/          # 待办任务
+│   ├── in-progress/      # 进行中
+│   └── completed/        # 已完成
+├── design/                # 设计资源
+│   ├── figma/            # Figma 链接
+│   └── components/       # 组件规范
+├── communication/         # 沟通记录
+│   ├── with-guantang.md  # 与 PM 沟通
+│   ├── with-jiangrou.md  # 与后端沟通
+│   └── with-suancai.md   # 与运维沟通
+└── logs/                 # 工作日志
+    └── daily/           # 每日日志
 ```
+
+**实际代码工程位置：** `F:\openclaw\code\frontend\`
 
 ---
 
 ## 🚀 快速开始
 
-### 1. 环境要求
-
-- Node.js 18+
-- npm 9+ / yarn 1.22+
-
-### 2. 安装依赖
-
+### 1. 查看任务
 ```bash
-npm install
-# 或
-yarn install
+# 查看待办任务
+ls tasks/backlog/
 ```
 
-### 3. 启动开发服务器
+### 2. 理解任务
+阅读任务文件，查看设计稿（如有）
 
+### 3. 开始开发
 ```bash
-# 开发模式
-npm run dev
-# 或
-yarn dev
+# 切换到代码目录
+cd F:\openclaw\code\frontend
 
-# 访问 http://localhost:3000
+# 创建功能分支
+git checkout -b feature/TASK-XXX
 ```
 
-### 4. 构建生产版本
-
-```bash
-npm run build
-# 或
-yarn build
-```
+### 4. 完成任务后
+- 提交代码到 `code/frontend`
+- 更新任务状态
+- 在沟通文件中通知相关人员
 
 ---
 
-## 👩‍💻 负责人
+## 💼 核心规范
 
-**主要开发者:** 🍡 豆沙Agent  
-**角色:** UI/UX设计师 / 前端工程师
+### Git 提交格式
+```bash
+feat: 新功能
+fix: Bug 修复
+ui: UI/样式调整
+refactor: 重构
+test: 测试相关
+docs: 文档更新
+```
 
-查看豆沙的配置文档：https://github.com/baobaobaobaozijun/openclawPlayground
+### 沟通时机
+- **需求不明确** → 立即联系灌汤
+- **API 问题** → 联系酱肉
+- **部署需求** → 联系酸菜
 
 ---
 
 ## 🎨 技术栈
 
-- **框架:** Vue 3 / React 18 (待定)
-- **UI 库:** Element Plus / Ant Design
-- **状态管理:** Pinia / Redux
-- **路由:** Vue Router / React Router
-- **样式:** SCSS / Tailwind CSS
-- **构建工具:** Vite / Webpack
+**框架:** Vue 3.4+  
+**语言:** TypeScript 5.x  
+**构建:** Vite 5.x  
+**UI:** Element Plus  
+**样式:** Tailwind CSS  
+
+详细规范：[workspace-guantang/agent-configs/dousha/README.md](../workspace-guantang/agent-configs/dousha/README.md)
 
 ---
 
-## 📊 开发进度
+## 📞 团队协作
 
-- [ ] 项目初始化
-- [ ] 设计系统建立
-- [ ] 基础组件开发
-- [ ] 首页开发
-- [ ] 登录/注册页面
-- [ ] 文章列表页
-- [ ] 文章详情页
-- [ ] 响应式适配
-- [ ] 性能优化
-- [ ] 单元测试
+你与以下角色协作：
+
+- **灌汤 (PM)** - 接收需求，确认设计
+- **酱肉 (后端)** - API 对接，数据格式
+- **酸菜 (运维)** - 性能监控，部署配置
 
 ---
 
-## 🔗 相关仓库
+**开始创造美妙的界面吧！** 🎨
 
-| 仓库 | 用途 |
-|------|------|
-| [openclawPlayground](https://github.com/baobaobaobaozijun/openclawPlayground) | Agent 配置文档中心 |
-| [openclaw-backend](https://github.com/baobaobaobaozijun/openclaw-backend) | 后端业务代码 |
-| [openclaw-devops](https://github.com/baobaobaobaozijun/openclaw-devops) | 运维测试脚本 |
-
----
-
-**开始创造美妙的用户体验吧！** ✨
+*最后更新：2026-03-08*
