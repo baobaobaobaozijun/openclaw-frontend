@@ -1,60 +1,112 @@
 <template>
   <div class="home">
-    <h1>OpenClaw Frontend</h1>
-    <p>Vue 3 + TypeScript + Vite</p>
-    <div class="status">
-      <h2>系统状态</h2>
-      <ul>
-        <li>✅ Vue 3 已初始化</li>
-        <li>✅ TypeScript 已配置</li>
-        <li>✅ Vue Router 已配置</li>
-        <li>✅ Pinia 状态管理已配置</li>
-      </ul>
-    </div>
+    <header class="header">
+      <h1 class="logo">包子铺博客</h1>
+      <nav class="nav">
+        <router-link to="/">首页</router-link>
+        <router-link to="/category/tech">技术</router-link>
+        <router-link to="/category/life">生活</router-link>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div class="content">
+        <ArticleList />
+      </div>
+
+      <aside class="sidebar">
+        <div class="widget">
+          <h3>热门文章</h3>
+          <p>开发中...</p>
+        </div>
+        <div class="widget">
+          <h3>标签云</h3>
+          <p>开发中...</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 包子铺博客. All rights reserved.</p>
+    </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-// Home View Component
+import ArticleList from '@/components/article/ArticleList.vue'
 </script>
 
 <style scoped>
 .home {
-  max-width: 800px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: #42b983;
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-h1 {
-  color: #42b983;
-  margin-bottom: 10px;
-}
-
-p {
-  color: #666;
-  margin-bottom: 30px;
-}
-
-.status {
-  background: #f5f5f5;
-  border-radius: 8px;
   padding: 20px;
-  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 30px;
+  flex: 1;
 }
 
-.status h2 {
-  margin-bottom: 15px;
+.content {
+  min-width: 0;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.widget {
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.widget h3 {
+  margin-bottom: 10px;
   color: #333;
 }
 
-.status ul {
-  list-style: none;
-  padding: 0;
-}
-
-.status li {
-  padding: 8px 0;
-  color: #555;
+.footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: auto;
 }
 </style>
