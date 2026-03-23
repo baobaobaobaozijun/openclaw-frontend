@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router';
 
 // 创建 axios 实例
 const request: AxiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: '/api',
   timeout: 10000,
 });
 
