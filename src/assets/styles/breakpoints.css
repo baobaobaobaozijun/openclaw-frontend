@@ -1,0 +1,27 @@
+/* 统一断点变量 - 2026-03-23 */
+:root {
+  --bp-mobile: 576px;
+  --bp-tablet: 768px;
+  --bp-desktop: 992px;
+  --bp-wide: 1200px;
+}
+
+/* 移动端 */
+@media (max-width: 576px) {
+  /* 手机竖屏 */
+}
+
+/* 平板 */
+@media (max-width: 768px) {
+  /* 平板竖屏 */
+}
+
+/* 桌面 */
+@media (max-width: 992px) {
+  /* 小桌面 */
+}
+
+/* 宽屏 */
+@media (max-width: 1200px) {
+  /* 标准桌面 */
+}
