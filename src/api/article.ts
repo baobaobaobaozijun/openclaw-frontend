@@ -24,3 +24,12 @@ export function updateArticle(id: number, data: { title?: string; content?: stri
 export function deleteArticle(id: number) {
   return request.delete(`/articles/${id}`)
 }
+
+// 命名导出（兼容 Home.vue/Articles.vue/ArticleDetail.vue 的 import { articleApi }）
+export const articleApi = {
+  getList: getArticleList,
+  getById: getArticle,
+  create: createArticle,
+  update: updateArticle,
+  delete: deleteArticle
+}
