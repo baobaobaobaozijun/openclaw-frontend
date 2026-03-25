@@ -1,19 +1,28 @@
-import request from '@/utils/request'
+import { request } from '@/utils/request'
 
 interface LoginResponse {
-  token: string
-  user?: { id: number; phone: string; nickname: string }
+  code: number
+  message: string
+  data: {
+    id: number
+    username: string
+    email: string
+    avatar: string | null
+    token: string
+  }
+  timestamp: number
 }
 
 interface RegisterRequest {
-  phone: string
+  username: string
+  email: string
   password: string
   nickname?: string
 }
 
 export const authApi = {
-  login: (phone: string, password: string): Promise<LoginResponse> => {
-    return request.post('/auth/login', { phone, password })
+  login: (username: string, password: string): Promise<LoginResponse> => {
+    return request.post('/auth/login', { username, password })
   },
   register: (data: RegisterRequest): Promise<LoginResponse> => {
     return request.post('/auth/register', data)
