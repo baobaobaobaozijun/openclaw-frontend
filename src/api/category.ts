@@ -4,7 +4,7 @@ export const categoryApi = {
   /**
    * 获取分类列表
    */
-  getCategories() {
+  getList() {
     return request({
       url: '/api/categories',
       method: 'get'

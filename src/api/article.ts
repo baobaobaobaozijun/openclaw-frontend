@@ -1,103 +1,26 @@
-﻿import { request } from '@/utils/request'
+import request from '@/utils/request'
 
-/**
- * 文章相关 API 接口
- */
-
-// 定义文章类型
-export interface Article {
-  id: number
-  title: string
-  slug: string
-  summary: string
-  coverImage?: string
-  author: {
-    id: number
-    username: string
-    avatar?: string
-  }
-  categories: Array<{
-    id: number
-    name: string
-    slug: string
-  }>
-  tags: Array<{
-    id: number
-    name: string
-    slug: string
-    color: string
-  }>
-  viewCount: number
-  likeCount: number
-  commentCount: number
-  isTop: boolean
-  isFeatured: boolean
-  publishedAt: string
-  createdAt: string
+// 文章相关接口（注意：baseURL 已包含 /api，这里不要再加 /api 前缀）
+export function getArticleList(params?: { page?: number; size?: number; keyword?: string; categoryId?: number }) {
+  return request.get('/articles', { params })
 }
 
-export interface ArticleDetail extends Article {
-  content: string
-  contentHtml: string
-  updatedAt?: string
+export function getArticle(id: number) {
+  return request.get(`/articles/${id}`)
 }
 
-export interface Pagination {
-  page: number
-  size: number
-  total: number
-  totalPages: number
-}
-
-export interface ArticleListResponse {
-  list: Article[]
-  pagination: Pagination
-}
-
-// 获取文章列表
-export const getArticles = (params?: {
-  page?: number
-  size?: number
-  categoryId?: number
-  tagId?: number
-  keyword?: string
-  sortBy?: string
-  sortOrder?: string
-}) => {
-  return request.get<ArticleListResponse>('/articles', params)
-}
-
-// 获取文章详情 (通过ID)
-export const getArticleById = (id: number) => {
-  return request.get<ArticleDetail>(`/articles/${id}`)
-}
-
-// 获取文章详情 (通过Slug)
-export const getArticleBySlug = (slug: string) => {
-  return request.get<ArticleDetail>(`/articles/slug/${slug}`)
-}
-
-// Aliases for backward compatibility
-export const getArticle = getArticleById
-export const createArticle = (data: { title: string; content: string; summary?: string }) => {
+export function createArticle(data: { title: string; content: string; summary?: string; categoryId?: number | null; status: 'DRAFT' | 'PUBLISHED' }) {
   return request.post('/articles', data)
 }
-export const updateArticle = (id: number, data: { title?: string; content?: string; summary?: string }) => {
-  return request.put(/articles/+id, data)
+
+export function create(data: { title: string; content: string; summary?: string; categoryId?: number | null; status: 'DRAFT' | 'PUBLISHED' }) {
+  return request.post('/articles', data)
 }
 
-// Additional types for store compatibility
-export interface ArticleListParams {
-  page?: number
-  size?: number
-  categoryId?: number
-  tagId?: number
-  keyword?: string
+export function updateArticle(id: number, data: { title?: string; content?: string; categoryId?: number | null }) {
+  return request.put(`/articles/${id}`, data)
 }
 
-export interface PageResult<T> {
-  records: T[]
-  total: number
-  pages: number
-  current: number
+export function deleteArticle(id: number) {
+  return request.delete(`/articles/${id}`)
 }

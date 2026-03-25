@@ -1,11 +1,13 @@
 <template>
   <div id="app">
+    <NavBar />
     <router-view />
   </div>
 </template>
 
 <script setup lang="ts">
 // OpenClaw Frontend - Main App Component
+import NavBar from './components/NavBar.vue'
 </script>
 
 <style>

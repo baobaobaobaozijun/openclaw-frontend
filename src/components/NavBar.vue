@@ -1,226 +1,187 @@
 <template>
   <nav class="navbar">
     <div class="navbar-container">
-      <!-- Logo -->
-      <div class="navbar-logo">
-        <router-link to="/">
-          <h2>Blog</h2>
-        </router-link>
+      <!-- 左侧：博客名称 -->
+      <div class="navbar-brand">
+        <router-link to="/" class="navbar-logo">包子铺</router-link>
       </div>
-
-      <!-- Desktop Navigation Links -->
-      <ul class="navbar-nav" :class="{ 'show-mobile': mobileMenuOpen }">
-        <li class="nav-item">
-          <router-link to="/" class="nav-link">首页</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/articles" class="nav-link">文章</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/categories" class="nav-link">分类</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/about" class="nav-link">关于</router-link>
-        </li>
-      </ul>
-
-      <!-- Right Side Content -->
-      <div class="navbar-right">
+      
+      <!-- 中间：导航链接 -->
+      <div class="navbar-nav">
+        <router-link to="/" class="nav-link">首页</router-link>
+        <router-link to="/articles" class="nav-link">文章</router-link>
+      </div>
+      
+      <!-- 右侧：登录/注册或用户信息 -->
+      <div class="navbar-user">
         <template v-if="isLoggedIn">
-          <!-- User Menu for logged-in users -->
-          <div class="user-menu">
-            <el-dropdown>
-              <span class="el-dropdown-link">
-                {{ username }}
-                <el-icon><arrow-down /></el-icon>
-              </span>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item @click="goToProfile">个人资料</el-dropdown-item>
-                  <el-dropdown-item @click="goToDashboard">仪表盘</el-dropdown-item>
-                  <el-dropdown-item divided @click="logout">退出登录</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </div>
+          <span class="username">{{ username }}</span>
+          <button @click="logout" class="logout-btn">退出</button>
         </template>
         <template v-else>
-          <!-- Login/Register buttons for non-logged-in users -->
-          <div class="auth-buttons">
-            <el-button type="default" @click="goToLogin">登录</el-button>
-            <el-button type="primary" @click="goToRegister">注册</el-button>
-          </div>
+          <router-link to="/login" class="nav-link login-link">登录</router-link>
+          <router-link to="/register" class="nav-link register-link">注册</router-link>
         </template>
-      </div>
-
-      <!-- Mobile Menu Toggle -->
-      <div class="mobile-toggle" @click="toggleMobileMenu">
-        <el-icon v-if="!mobileMenuOpen"><menu /></el-icon>
-        <el-icon v-else><close /></el-icon>
       </div>
     </div>
   </nav>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { ElButton, ElDropdown, ElDropdownMenu, ElDropdownItem, ElIcon } from 'element-plus'
-import { ArrowDown, Menu as IconMenu, Close } from '@element-plus/icons-vue'
 
-// State
-const mobileMenuOpen = ref(false)
 const router = useRouter()
 
-// Computed properties
+// 检查登录状态
 const isLoggedIn = computed(() => {
-  // Check if user is logged in (based on token or user info in store)
-  return !!localStorage.getItem('token') // Example implementation
+  return localStorage.getItem('access_token') !== null
 })
+
+// 获取用户名（如果有的话）
 const username = computed(() => {
-  // Return username if available
-  return localStorage.getItem('username') || '用户' // Example implementation
+  const token = localStorage.getItem('access_token')
+  if (token) {
+    try {
+      // 如果是 JWT token，可以解析获取用户名
+      const payload = JSON.parse(atob(token.split('.')[1]))
+      return payload.username || '用户'
+    } catch (e) {
+      // 如果不是 JWT 格式，返回默认用户名或从其他地方获取
+      return '用户'
+    }
+  }
+  return '用户'
 })
 
-// Methods
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value
-}
-
-const goToLogin = () => {
-  router.push('/login')
-}
-
-const goToRegister = () => {
-  router.push('/register')
-}
-
-const goToProfile = () => {
-  router.push('/profile')
-}
-
-const goToDashboard = () => {
-  router.push('/dashboard')
-}
-
+// 退出登录
 const logout = () => {
-  // Clear authentication data
-  localStorage.removeItem('token')
-  localStorage.removeItem('username')
-  // Redirect to home page
-  router.push('/')
+  localStorage.removeItem('access_token')
+  router.push('/login')
 }
 </script>
 
 <style scoped>
 .navbar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  height: var(--navbar-height, 60px);
+  z-index: 1000;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
 }
 
 .navbar-container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  height: 100%;
+  align-items: center;
+  padding: 0.5rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.navbar-logo h2 {
-  margin: 0;
+.navbar-brand {
   font-size: 1.5rem;
-  color: var(--color-primary, #409eff);
+  font-weight: bold;
+}
+
+.navbar-logo {
+  color: inherit;
+  text-decoration: none;
 }
 
 .navbar-nav {
   display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
   gap: 2rem;
 }
 
 .nav-link {
   text-decoration: none;
   color: #333;
-  font-weight: 500;
-  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
 }
 
 .nav-link:hover,
-.router-link-active {
-  color: var(--color-primary, #409eff);
+.nav-link.router-link-active {
+  background-color: #f0f0f0;
 }
 
-.navbar-right {
+.navbar-user {
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
 
-.user-menu .el-dropdown-link {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
+.username {
+  margin-right: 1rem;
 }
 
-.auth-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.mobile-toggle {
-  display: none;
-  cursor: pointer;
-  font-size: 1.5rem;
+.logout-btn {
+  background: none;
+  border: none;
   color: #333;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
 }
 
-/* Mobile styles */
-@media screen and (max-width: 768px) {
+.logout-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.login-link,
+.register-link {
+  background-color: #007bff;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.login-link:hover {
+  background-color: #0056b3;
+}
+
+.register-link {
+  background-color: #28a745;
+}
+
+.register-link:hover {
+  background-color: #218838;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
   .navbar-nav {
-    position: fixed;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background: white;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transform: translateY(-150%);
-    transition: transform 0.3s ease;
-    z-index: 999;
-  }
-
-  .navbar-nav.show-mobile {
-    transform: translateY(0);
-  }
-
-  .navbar-right {
-    position: relative;
-  }
-
-  .mobile-toggle {
-    display: block;
-  }
-
-  .auth-buttons {
-    flex-direction: column;
+    order: 3;
     width: 100%;
-    padding: 0 20px;
+    justify-content: center;
+    margin-top: 0.5rem;
   }
 
-  .auth-buttons .el-button {
+  .navbar-nav .nav-link {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .navbar-user {
+    order: 2;
     width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .navbar-brand {
+    order: 1;
+    text-align: center;
   }
 }
 </style>
