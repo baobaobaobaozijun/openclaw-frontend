@@ -7,7 +7,8 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/register', name: 'Register', component: () => import('@/views/Register.vue'), meta: { title: '注册' } },
   { path: '/articles', name: 'ArticleList', component: () => import('@/views/Articles.vue'), meta: { title: '文章列表' } },
   { path: '/article/:id', name: 'ArticleDetail', component: () => import('@/views/ArticleDetail.vue'), meta: { title: '文章详情' }, props: true },
-  { path: '/article/new', name: 'ArticleCreate', component: () => import('@/views/ArticleEdit.vue'), meta: { requiresAuth: true } },
+  { path: '/article/new', name: 'ArticleCreate', component: () => import('@/views/ArticleCreate.vue'), meta: { title: '发布文章', requiresAuth: true } },
+  { path: '/article/edit/:id', name: 'ArticleEdit', component: () => import('@/views/ArticleEdit.vue'), meta: { title: '编辑文章', requiresAuth: true }, props: true },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/views/NotFound.vue'), meta: { title: '页面未找到' } }
 ]
 
